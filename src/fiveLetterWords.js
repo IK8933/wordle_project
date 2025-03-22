@@ -1,4 +1,4 @@
-const fiveLetterWords = [
+export const fiveLetterWords = [
 "aback",
 "abaft",
 "abase",
