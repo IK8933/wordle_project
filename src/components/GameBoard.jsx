@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { fiveLetterWords } from "../fiveLetterWords";
-import { Wordle, GREEN, YELLOW, BLACK } from "../index";
+import { GREEN, YELLOW, BLACK } from "../index";
 import "../flipAnimation.css"; 
 
-const getRandomWord = () => fiveLetterWords[Math.floor(Math.random() * fiveLetterWords.length)];
-
-export default function GameBoard() {
-  const [targetWord, setTargetWord] = useState(getRandomWord());
-  const [wordle, setWordle] = useState(new Wordle(targetWord));
+export default function GameBoard({ targetWord, wordle, resetGame }) { 
   const [guesses, setGuesses] = useState([]);
   const [input, setInput] = useState("");
   const [message, setMessage] = useState("");
@@ -18,17 +13,20 @@ export default function GameBoard() {
   const [revealedIndexes, setRevealedIndexes] = useState({});
 
   useEffect(() => {
-    setWordle(new Wordle(targetWord));
+    setGuesses([]);
+    setInput("");
+    setMessage("");
+    setShowLossPopup(false);
+    setShowWinPopup(false);
+    setFlippingIndexes([]);
+    setFlippingRow(null);
+    setRevealedIndexes({});
   }, [targetWord]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (input.length !== 5) {
       setMessage("Must be a 5-letter word");
-      return;
-    }
-    if (!fiveLetterWords.includes(input.toLowerCase())) {
-      setMessage("Invalid word");
       return;
     }
 
@@ -67,18 +65,6 @@ export default function GameBoard() {
         setTimeout(() => setShowLossPopup(true), 500);
       }
     }, result.length * 300);
-  };
-
-  const resetGame = () => {
-    setTargetWord(getRandomWord());
-    setGuesses([]);
-    setInput("");
-    setMessage("");
-    setShowLossPopup(false);
-    setShowWinPopup(false);
-    setFlippingIndexes([]);
-    setFlippingRow(null);
-    setRevealedIndexes({});
   };
 
   const grid = Array.from({ length: 6 }, (_, row) => {
@@ -128,10 +114,12 @@ export default function GameBoard() {
         ))}
       </div>
 
-      {/* Message Display */}
-      {message && <p className="text-red-500 mt-2">{message}</p>}
 
-      {/* Loss Popup */}
+
+  {/* Message Display */}
+  //       {message && <p className="text-red-500 mt-2">{message}</p>}
+
+       {/* Loss Popup */}
       {showLossPopup && (
         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
