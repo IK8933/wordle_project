@@ -117,7 +117,7 @@ export default function GameBoard({ targetWord, wordle, resetGame }) {
 
 
   {/* Message Display */}
-  //       {message && <p className="text-red-500 mt-2">{message}</p>}
+  {message && <p className="text-red-500 mt-2">{message}</p>}
 
        {/* Loss Popup */}
       {showLossPopup && (
