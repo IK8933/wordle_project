@@ -80,7 +80,10 @@ export default function GameBoard({ targetWord, wordle, resetGame }) {
   };
 
   return (
-    <div className="mt-10 flex flex-col items-center">
+<div className="flex flex-col items-center min-h-screen w-full bg-cover bg-center pt-20"
+
+      style={{ backgroundImage: "url('/Zen.jpg')" }}
+    >  
       {/* Input Form */}
       <form onSubmit={handleSubmit} className="mb-4 flex">
         <input
